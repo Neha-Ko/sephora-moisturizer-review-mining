@@ -67,8 +67,8 @@ The cleaned dataset and Claude's saved labels are included in `Data/`. The raw d
 1. **Clone the repo and move into it**
 
    ```bash
-   git clone https://github.com/Neha-Ko/CDA-Course-Project.git
-   cd CDA-Course-Project
+   git clone https://github.com/Neha-Ko/sephora-moisturizer-review-mining.git
+   cd sephora-moisturizer-review-mining
    ```
 
 2. **Create a virtual environment and install the packages**
