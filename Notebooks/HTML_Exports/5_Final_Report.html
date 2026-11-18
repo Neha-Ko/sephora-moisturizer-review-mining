@@ -10548,6 +10548,77 @@ The data comes from a public Kaggle dataset of reviews posted publicly on Sephor
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=31f5ae13">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="AI-Usage-Log">AI Usage Log<a class="anchor-link" href="#AI-Usage-Log">¶</a></h2><p>Claude API usage for labeling reviews (prompts, agreement test, tokens, and cost) is documented in Section 4 and notebook 4. This log covers other AI assistance on the project.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Tool</th>
+<th>Task</th>
+<th>Prompt (summary)</th>
+<th>What AI produced</th>
+<th>My decision</th>
+<th>Verification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Claude.ai</td>
+<td>Build the Claude labeling pipeline (notebook 4)</td>
+<td>Asked for code to label reviews through the API, parse JSON replies, and run the Batch API</td>
+<td>Labeling function, JSON parser, batch submission and retrieval code</td>
+<td>Modified after errors: removed the unsupported <code>temperature</code> setting, extracted only text blocks from replies, raised the reply limit from 100 to 300 tokens after a cut-off reply. Leftover export code also overwrote my hand labels, so I restored them with Git and added guards so reruns never overwrite saved files or resubmit the batch</td>
+<td>Ran the test set until 0 of 30 replies were unreadable; confirmed the restored hand labels matched my originals</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Claude.ai</td>
+<td>Test which product-level skin-type gaps are real (Section 5.2)</td>
+<td>Asked how to test 60 dry-vs-oily gaps without false positives</td>
+<td>Fisher's exact tests with a Benjamini-Hochberg correction</td>
+<td>Used, but asked what "significant" meant before using the word, and made sure every claim of significance cites a q-value</td>
+<td>Checked that the four significant products matched the dumbbell chart and that the q-values were below 0.05</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Claude.ai</td>
+<td>Check whether the findings hold over time (Section 5.3)</td>
+<td>Asked how to test whether gaps were caused by one time period</td>
+<td>Code splitting all reviews at a single cutoff date</td>
+<td>Rejected the single cutoff: it left some groups tiny (CLINIQUE's later half had 8 dry and 3 oily reviews). Switched to splitting each product at its own median date</td>
+<td>Read the group sizes in the output; every half now has 32–67 reviews per group</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Claude.ai</td>
+<td>Reword report sections (executive summary, Sections 1–4 and 6–8)</td>
+<td>Asked to reword the report sections in more professional language based on my rough bullet points and the rubric. Strictly said to only include numbers that are already in my bullet points.</td>
+<td>Drafts of each section</td>
+<td>Modified with minor rewording and corrected factual errors: said only review text was sent to Claude (it was title and text), said the eligibility rule was 100 reviews per skin type (it was 30), described 8% as "reviewers" instead of reviews, and omitted the two excluded products.</td>
+<td>Checked every number against notebook outputs; a skin-tone cell errored, which showed that field had been dropped during cleaning, so I rewrote that section</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Claude.ai</td>
+<td>Reword the observations (Sections 5.1 and 5.4)</td>
+<td>Asked Claude to reword observations in more professional language based on my rough bullet points for the complaint-rate and star-rating results. Strictly said to only include numbers that are already in my bullet points.</td>
+<td>Claimed skin types are "equally likely to complain" with no test behind it, and called breakouts, irritation, and not moisturizing "deal-breakers"</td>
+<td>Modified: added a chi-square test before keeping the first claim (p = 0.44); renamed 5.4 a sanity check and softened "deal-breaker" language, since the rating drops are associations that overlap across complaints and products</td>
+<td>Ran the chi-square test; reread each claim against the tables it cited</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 </main>
 </body>
 </html>
