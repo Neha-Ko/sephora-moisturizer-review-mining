@@ -64,23 +64,43 @@ The cleaned dataset and Claude's saved labels are included in `Data/`. The raw d
 
 ## How to Run
 
-1. **Clone the repository** and open the project folder.
-2. **Create and activate a virtual environment, then install packages:**
+1. **Clone the repo and move into it**
+
+   ```bash
+   git clone https://github.com/Neha-Ko/CDA-Course-Project.git
+   cd CDA-Course-Project
    ```
+
+2. **Create a virtual environment and install the packages**
+
+   ```bash
    python3 -m venv .venv
-   source .venv/bin/activate        # on Windows: .venv\Scripts\activate
+   source .venv/bin/activate        # Windows: .venv\Scripts\activate
    pip install -r requirements.txt
    ```
-3. **Add a Claude API key** (needed only for notebooks 3 and 4). Create a file named `.env` in the project folder containing:
+
+3. **Add your API key** (optional; only needed to rerun the Claude cells in notebooks 3 and 4)
+
+   Create a file named `.env` in the project folder containing one line:
+
    ```
    ANTHROPIC_API_KEY=your-key-here
    ```
-   This file is excluded from Git by `.gitignore`. Never commit it.
-4. **Run the notebooks in order**, using the `.venv` kernel:
-   - **Notebook 1** is optional, since the cleaned dataset is already in `Data/`. Running it downloads the full raw dataset from Kaggle (requires a Kaggle account and several GB of disk space) and recreates the cleaned file.
-   - **Notebooks 2 and 3** load the cleaned dataset and run in a few minutes. The Claude cells in notebook 3 are switched off by default (`RUN_CLAUDE = False`).
-   - **Notebook 4** reuses the saved files in `Data/` (category suggestions, test-set labels, and full labels), so rerunning it does not relabel reviews or resubmit the batch. It still needs an API key for its connection test and batch status check.
-   - **Notebook 5** (final report) loads the saved labels and runs without an API key.
+
+   `.env` is listed in `.gitignore`, so it is never committed.
+
+4. **Get the data**
+
+   No download is needed: the cleaned dataset (`Data/sephora_moisturizer_reviews_clean.csv.gz`) and Claude's saved labels (`Data/claude_labels.csv`) are already in the repo. To rebuild the cleaned dataset from scratch, run notebook 1, which downloads the raw [Sephora Products and Skincare Reviews](https://www.kaggle.com/datasets/nadyinky/sephora-products-and-skincare-reviews) data from Kaggle automatically (requires a Kaggle account and several GB of disk space).
+
+5. **Run the notebooks**
+
+   Open each notebook in `Notebooks/`, select the `.venv` kernel, and choose **Run All**:
+   - **Notebooks 2, 3, and 5** run without an API key. The Claude cells in notebook 3 are off by default (`RUN_CLAUDE = False`), and notebook 5 (the final report) reads the saved labels from `Data/claude_labels.csv`.
+   - **Notebook 4** reuses all saved files in `Data/`, so it never relabels reviews or resubmits the batch, but its connection test and batch status cells need an API key.
+   - **Notebook 1** is only needed to rebuild the cleaned dataset (step 4).
+
+   HTML exports of every notebook are in `Notebooks/HTML_Exports/` if you just want to read the results.
 
 ## License
 
